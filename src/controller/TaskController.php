@@ -1,9 +1,12 @@
 <?php
 
+use logic\TaskLogic;
+
 class TaskController
 {
     public function index()
     {
+        $a = new TaskLogic();
         try {
             $pdo = new PDO('mysql:host=localhost;dbname=euler_test;charset=utf8', 'root', '',
         array(PDO::ATTR_EMULATE_PREPARES => false));
