@@ -70,11 +70,7 @@ echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $nowTask['taskDataId'
 </thead>
 <?php
 foreach ($taskDataList as $task) {
-    // かかった時間を求める
-    $startTime = strtotime($task['startTime']);
-    $endTime = strtotime($task['endTime']);
-
-    echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $task['taskDataId'], $task['task'], $task['startTime'], $task['endTime'], time_diff($endTime, $startTime));
+    echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $task['taskDataId'], $task['task'], $task['startTime'], $task['endTime'], $task['diffTime']);
 }
 ?>
 </table>

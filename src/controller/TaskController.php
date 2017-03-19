@@ -32,15 +32,24 @@ class TaskController
             exit('データベース接続失敗。'.$e->getMessage());
         }
 
+        // 残り時間を計算
+        foreach ($taskDataList as &$task) {
+            // かかった時間を求める
+            $task["diffTime"] = time_diff($task['startTime'], $task['endTime']);
+        }
+
         include_once(__DIR__ . "/../view/index.html");
     }
-}
 
-function time_diff($timeFrom, $timeTo)
-{
-    // 日時差を秒数で取得
-    $dif = $timeFrom - $timeTo;
-    $min = intval($dif/60);
-    $sec = intval($dif%60);
-    return sprintf("%s分  %s秒", $min, $sec);
+    function time_diff($startTime, $endTime)
+    {
+        $timeFrom = strtotime($startTime);
+        $timeTo = strtotime($endTime);
+
+        // 日時差を秒数で取得
+        $dif = $timeFrom - $timeTo;
+        $min = intval($dif/60);
+        $sec = intval($dif%60);
+        return sprintf("%s分  %s秒", $min, $sec);
+    }
 }
