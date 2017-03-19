@@ -6,39 +6,28 @@ class TaskController
 {
     public function index()
     {
-        $a = new TaskLogic();
-        try {
-            $pdo = new PDO('mysql:host=localhost;dbname=euler_test;charset=utf8', 'root', '',
-        array(PDO::ATTR_EMULATE_PREPARES => false));
-            if (!empty($_POST)) {
-                // 既存タスクの終了
-        $stmt = $pdo->prepare('update TaskData set isClosed =1 where taskDataId = :taskDataId');
-                $stmt->bindValue(':taskDataId', $_POST['nowTaskDataId'], PDO::PARAM_INT);
-                $stmt->execute();
-
-        // タスクの挿入
-        $stmt = $pdo -> prepare("INSERT INTO TaskData (task) VALUES (:task)");
-                $stmt->bindParam(':task', $_POST['task'], PDO::PARAM_STR);
-                $stmt->execute();
-
-                //  リダイレクト
-                header("Location: " . "/task/index");
-            }
-            $stmt = $pdo->prepare("SELECT * FROM TaskData ORDER BY taskDataId DESC");
-            $stmt->execute();
-            $taskDataList = $stmt->fetchAll();
-            $nowTask = array_shift($taskDataList);
-        } catch (PDOException $e) {
-            exit('データベース接続失敗。'.$e->getMessage());
-        }
+        $taskLogic = new TaskLogic();
+        $res = $taskLogic->getTaskList();
+        $nowTask = $res['nowTask'];
+        $taskDataList = $res['taskDataList'];
 
         // 残り時間を計算
         foreach ($taskDataList as &$task) {
             // かかった時間を求める
-            $task["diffTime"] = time_diff($task['startTime'], $task['endTime']);
+            $task["diffTime"] = $this->time_diff($task['startTime'], $task['endTime']);
         }
 
         include_once(__DIR__ . "/../view/index.html");
+    }
+
+    public function addTask()
+    {
+        if (!empty($_POST)) {
+            $taskLogic = new TaskLogic();
+            $taskLogic->addTask($_POST["task"], $_POST['nowTaskDataId']);
+        }
+        //  リダイレクト
+        header("Location: " . "/task/index");
     }
 
     function time_diff($startTime, $endTime)
