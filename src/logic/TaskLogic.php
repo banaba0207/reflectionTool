@@ -68,8 +68,8 @@ class TaskLogic
      */
     private function _timeDiff($startTime, $endTime)
     {
-        $timeFrom = strtotime($startTime);
-        $timeTo = strtotime($endTime);
+        $timeTo   = strtotime($startTime);
+        $timeFrom = strtotime($endTime);
 
         // 日時差を秒数で取得
         $dif = $timeFrom - $timeTo;

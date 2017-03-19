@@ -21,7 +21,12 @@ class TaskDataModel
      */
     public function getTaskList()
     {
-        $stmt = $this->_pdo->prepare("SELECT * FROM TaskData ORDER BY taskDataId DESC");
+        $sql = "SELECT * FROM TaskData WHERE startTime > :startTime ORDER BY taskDataId DESC";
+        $stmt = $this->_pdo->prepare($sql);
+
+        $date = date("Y-m-d H:i:s", strtotime('-24 hour', time()));
+        $stmt->bindParam(':startTime', $date, \PDO::PARAM_STR);
+
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -33,7 +38,7 @@ class TaskDataModel
     public function addTask($task, $nowTaskDataId = null)
     {
         // タスクの挿入
-        $stmt = $this->_pdo -> prepare("INSERT INTO TaskData (task) VALUES (:task)");
+        $stmt = $this->_pdo->prepare("INSERT INTO TaskData (task) VALUES (:task)");
         $stmt->bindParam(':task', $task, \PDO::PARAM_STR);
 
         return $stmt->execute();
