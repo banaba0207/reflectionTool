@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "logic\\": "logic/",
+            "model\\": "model/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor/"
+    }
+}
