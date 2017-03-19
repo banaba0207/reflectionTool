@@ -43,21 +43,10 @@ class TaskLogic
       */
     public function addTask($task, $nowTaskDataId = null)
     {
-        try {
-            $pdo = new \PDO('mysql:host=localhost;dbname=euler_test;charset=utf8', 'root', '',
-        array(\PDO::ATTR_EMULATE_PREPARES => false));
-                // 既存タスクの終了
-        $stmt = $pdo->prepare('update TaskData set isClosed =1 where taskDataId = :taskDataId');
-            $stmt->bindValue(':taskDataId', $nowTaskDataId, \PDO::PARAM_INT);
-            $stmt->execute();
+        $taskDataModel = $this->getTaskDataModel();
 
-        // タスクの挿入
-        $stmt = $pdo -> prepare("INSERT INTO TaskData (task) VALUES (:task)");
-            $stmt->bindParam(':task', $task, \PDO::PARAM_STR);
-            $stmt->execute();
-        } catch (\PDOException $e) {
-            exit('データベース接続失敗。'.$e->getMessage());
-        }
+        $taskDataModel->endTask($nowTaskDataId);
+        $taskDataModel->addTask($task);
 
         return true;
     }
