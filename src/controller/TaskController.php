@@ -17,9 +17,10 @@ class TaskController
         $stmt = $pdo -> prepare("INSERT INTO TaskData (task) VALUES (:task)");
                 $stmt->bindParam(':task', $_POST['task'], PDO::PARAM_STR);
                 $stmt->execute();
-                header("Location: " . $_SERVER['PHP_SELF']);
-            }
 
+                //  リダイレクト
+                header("Location: " . "/task/index");
+            }
             $stmt = $pdo->prepare("SELECT * FROM TaskData ORDER BY taskDataId DESC");
             $stmt->execute();
             $taskDataList = $stmt->fetchAll();

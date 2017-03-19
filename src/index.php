@@ -1,2 +1,2 @@
 <?php
-require_once 'public_html/index.php';
+require_once __DIR__ . '/public_html/index.php';
