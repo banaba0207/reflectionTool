@@ -1,21 +1,30 @@
 <?php
 namespace logic;
 
+use model\TaskDataModel;
+
 class TaskLogic
 {
+    private $_taskDataModel = null;
+
+    private function getTaskDataModel()
+    {
+        if ($this->_taskDataModel) {
+            return $this->_taskDataModel;
+        }
+
+        $this->_taskDataModel = new TaskDataModel();
+        return $this->_taskDataModel;
+    }
+
     public function getTaskList()
     {
-        try {
-            $pdo = new \PDO('mysql:host=localhost;dbname=euler_test;charset=utf8', 'root', '',
-        array(\PDO::ATTR_EMULATE_PREPARES => false));
+        $taskDataModel = $this->getTaskDataModel();
 
-            $stmt = $pdo->prepare("SELECT * FROM TaskData ORDER BY taskDataId DESC");
-            $stmt->execute();
-            $taskDataList = $stmt->fetchAll();
-            $nowTask = array_shift($taskDataList);
-        } catch (\PDOException $e) {
-            exit('データベース接続失敗。'.$e->getMessage());
-        }
+        $taskDataList = $taskDataModel->getTaskList();
+
+        // 現在取り組んでいるタスクを取得
+        $nowTask = array_shift($taskDataList);
 
         // タスク毎に、要した時間を計算
         foreach ($taskDataList as &$task) {
