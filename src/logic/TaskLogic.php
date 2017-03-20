@@ -17,6 +17,9 @@ class TaskLogic
         return $this->_taskDataModel;
     }
 
+    /* タスク取得
+     * @return array
+     */
     public function getTaskList()
     {
         $taskDataModel = $this->getTaskDataModel();
@@ -40,20 +43,25 @@ class TaskLogic
      /* タスクを挿入する。既存タスクが存在する場合、それを終了する
       * @param string $task
       * @param int    $nowTaskDataId
+      * @return bool
       */
     public function addTask($task, $nowTaskDataId = null)
     {
         $taskDataModel = $this->getTaskDataModel();
 
-        $taskDataModel->endTask($nowTaskDataId);
-        $taskDataModel->addTask($task);
+        if ($nowTaskDataId) {
+            // 既存タスクの更新
+            $taskDataModel->endTask($nowTaskDataId);
+        }
 
-        return true;
+        // 新タスク挿入
+        return $taskDataModel->addTask($task);
     }
 
     /* 英文形式の日付を受け取り、日付の差分を返す
      * @param string $startTime
      * @param string $endTime
+     * @return string
      */
     private function _timeDiff($startTime, $endTime)
     {
@@ -62,6 +70,7 @@ class TaskLogic
 
         // 日時差を秒数で取得
         $dif = $timeFrom - $timeTo;
+
         $min = intval($dif/60);
         $sec = intval($dif%60);
         return sprintf("%s分  %s秒", $min, $sec);

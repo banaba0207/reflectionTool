@@ -7,7 +7,7 @@ class TaskController
     public function index()
     {
         $taskLogic = new TaskLogic();
-        
+
         $res = $taskLogic->getTaskList();
         $nowTask = $res['nowTask'];
         $taskDataList = $res['taskDataList'];

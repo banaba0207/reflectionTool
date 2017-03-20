@@ -16,8 +16,7 @@ class TaskDataModel
     }
 
     /* タスクを取得
-     * @param string $task
-     * @param int    $nowTaskDataId
+     * @return array
      */
     public function getTaskList()
     {
@@ -34,6 +33,7 @@ class TaskDataModel
      /* タスクを挿入する。既存タスクが存在する場合、それを終了する
       * @param string $task
       * @param int    $nowTaskDataId
+      * @return bool
       */
     public function addTask($task, $nowTaskDataId = null)
     {
@@ -46,6 +46,7 @@ class TaskDataModel
 
     /* タスクを終了する
      * @param int    $nowTaskDataId
+     * @return bool
      */
    public function endTask($nowTaskDataId)
    {
