@@ -1,3 +1,2 @@
 RewriteEngine On
-# RewriteRule ^(.*)$ index.php [QSA,L]
-RewriteRule ^(.*)$ index.php
+RewriteRule ^(.*)$ public_html/index.php [QSA,L]
