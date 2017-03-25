@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html lang = “ja”>
+<html lang=“ ja”>
+
 <head>
-    <link rel="stylesheet" href="/public_html/css/commmon.css" type="text/css" />
-    <meta charset = “UFT-8”>
+    <link rel="stylesheet" href="/public_html/css/common.css" type="text/css" />
+    <meta charset=“ UFT-8”>
     <title>reflection</title>
 </head>
+
 <body>
-<h1>Let's Reflection</h1>
+    <h1>Let's Reflection</h1>
 
-<!-- タスク入力フォーム -->
-<form action="/task/addTask" method="post">
-    <input name="task" style="width:300px;height:50px"/>
-    <input type="hidden" name="nowTaskDataId" value='<?php echo $nowTask['taskDataId'] ?>' />
-    <button type="submit">更新</button>
-</form>
+    <!-- タスク入力フォーム -->
+    <form action="/task/addTask" method="post">
+        <input name="task" style="width:300px;height:50px" />
+        <input type="hidden" name="nowTaskDataId" value='<?php echo $nowTask[' taskDataId '] ?>' />
+        <button type="submit">更新</button>
+    </form>
 
-<h3>取組中タスク</h3>
-<table class="type09">
-    <thead>
-<tr>
-    <th>taskID</th>
-    <th>タスク</th>
-    <th>開始時刻</th>
-</tr>
-</thead>
-<?php
+    <h3>取組中タスク</h3>
+    <table class="type09">
+        <thead>
+            <tr>
+                <th>taskID</th>
+                <th>タスク</th>
+                <th>開始時刻</th>
+            </tr>
+        </thead>
+        <?php
 echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", $nowTask['taskDataId'], $nowTask['task'], $nowTask['startTime']);
 ?>
-</table>
+    </table>
 
-<h3>終了タスク</h3>
-<table class="type09">
-<thead>
-    <tr>
-    <th>taskID</th>
-    <th>タスク</th>
-    <th>開始時刻</th>
-    <th>終了時刻</th>
-    <th>かかった時間（分）</th>
-</tr>
-</thead>
-<?php
+    <h3>終了タスク</h3>
+    <table class="type09">
+        <thead>
+            <tr>
+                <th>taskID</th>
+                <th>タスク</th>
+                <th>開始時刻</th>
+                <th>終了時刻</th>
+                <th>かかった時間（分）</th>
+            </tr>
+        </thead>
+        <?php
 foreach ($taskDataList as $task) {
     echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $task['taskDataId'], $task['task'], $task['startTime'], $task['endTime'], $task['diffTime']);
 }
 ?>
-</table>
+    </table>
 </body>
+
 </html>
