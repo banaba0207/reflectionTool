@@ -35,7 +35,7 @@ class TaskLogic
         }
 
         return array(
-            'nowTask' => $nowTask,
+            'nowTask'      => $nowTask,
             'taskDataList' => $taskDataList
         );
     }

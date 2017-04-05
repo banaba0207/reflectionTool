@@ -43,7 +43,7 @@ class Dispatcher
         if (count($params) > 1) {
             $action = $params[1];
         }
-        
+
         // アクション実行
         $controllerInstance->$action();
     }

@@ -2,7 +2,8 @@
     "autoload": {
         "psr-4": {
             "logic\\": "logic/",
-            "model\\": "model/"
+            "model\\": "model/",
+            "plugin\\": "plugin/"
         }
     },
     "config": {

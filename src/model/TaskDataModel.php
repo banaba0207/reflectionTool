@@ -5,7 +5,7 @@ class TaskDataModel
 {
     private $_pdo;
 
-    function __construct()
+    public function __construct()
     {
         $this->_pdo = new \PDO(
             'mysql:host=localhost;dbname=euler_test;charset=utf8',
