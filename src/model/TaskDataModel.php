@@ -1,33 +1,30 @@
 <?php
 namespace model;
 
-class TaskDataModel
+class TaskDataModel extends \model\DataModel
 {
-    private $_pdo;
+    private $_tableName = 'TaskData';
 
-    public function __construct()
+    const CLOSED = 1;
+
+    public function getTableName()
     {
-        $this->_pdo = new \PDO(
-            'mysql:host=localhost;dbname=euler_test;charset=utf8',
-            'root',
-            '',
-            array(\PDO::ATTR_EMULATE_PREPARES => false)
-         );
+        return $this->_tableName;
     }
 
-    /* タスクを取得
+    /* 本日中のタスクを取得
      * @return array
      */
     public function getTaskList()
     {
-        $sql = "SELECT * FROM TaskData WHERE startTime > :startTime ORDER BY taskDataId DESC";
-        $stmt = $this->_pdo->prepare($sql);
+        $date = date("Y-m-d");
 
-        $date = date("Y-m-d H:i:s", strtotime('-24 hour', time()));
-        $stmt->bindParam(':startTime', $date, \PDO::PARAM_STR);
+        $result = $this
+            ->where('startTime', '>', $date)
+            ->desc("taskDataId")
+            ->toArray();
 
-        $stmt->execute();
-        return $stmt->fetchAll();
+        return $result;
     }
 
      /* タスクを挿入する。既存タスクが存在する場合、それを終了する
@@ -38,10 +35,10 @@ class TaskDataModel
     public function addTask($task, $nowTaskDataId = null)
     {
         // タスクの挿入
-        $stmt = $this->_pdo->prepare("INSERT INTO TaskData (task) VALUES (:task)");
-        $stmt->bindParam(':task', $task, \PDO::PARAM_STR);
+        $result = $this
+            ->save('task', $task);
 
-        return $stmt->execute();
+        return $result;
     }
 
     /* タスクを終了する
@@ -50,10 +47,10 @@ class TaskDataModel
      */
    public function endTask($nowTaskDataId)
    {
-       // 既存タスクの終了
-       $stmt = $this->_pdo->prepare('update TaskData set isClosed =1 where taskDataId = :taskDataId');
-       $stmt->bindValue(':taskDataId', $nowTaskDataId, \PDO::PARAM_INT);
+       $result = $this
+           ->where('taskDataId', '=', $nowTaskDataId)
+           ->update('isClosed', self::CLOSED);
 
-       return $stmt->execute();
+       return $result;
    }
 }
