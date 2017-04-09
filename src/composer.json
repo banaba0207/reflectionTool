@@ -8,5 +8,8 @@
     },
     "config": {
         "vendor-dir": "vendor/"
+    },
+    "require": {
+        "smarty/smarty": "v3.1.30"
     }
 }

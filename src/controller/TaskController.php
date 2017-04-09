@@ -17,12 +17,21 @@ class TaskController
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskList();
 
+        $smarty = new Smarty();
+        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
+        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+
         // tplに渡す変数
         $nowTask       = $res['nowTask'];
         $nowTaskDataId = $nowTask['taskDataId'];
         $taskDataList  = $res['taskDataList'];
 
-        include_once(__DIR__ . "/../view/index.html");
+        $smarty->assign('nowTask', $nowTask);
+        $smarty->assign('nowTaskDataId', $nowTaskDataId);
+        $smarty->assign('taskDataList', $taskDataList);
+
+        $smarty->display('index.tpl');
     }
 
     public function addTask()
