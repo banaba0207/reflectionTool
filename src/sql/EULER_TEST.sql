@@ -1,0 +1,1 @@
+CREATE DATABASES euler_test;
