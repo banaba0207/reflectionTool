@@ -12,7 +12,7 @@
 
     <!-- タスク入力フォーム -->
     <form action="/task/addTask" method="post">
-        <input name="task" style="width:300px;height:50px" />
+        <input name="task" style="width:300px;height:50px" autofocus />
         <input type="hidden" name="nowTaskDataId" value="{$nowTaskDataId}" />
         <button type="submit">更新</button>
     </form>
