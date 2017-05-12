@@ -7,8 +7,8 @@ $cpFileList = [
     'model',
     'view',
     'public_html',
-    'index.html'
-    '\.htacess',
+    'index.html',
+    '.htacess',
     'vendor',
 ];
 $cmd = "cd /home/vpsuser/work/reflectionTool/src &&"
