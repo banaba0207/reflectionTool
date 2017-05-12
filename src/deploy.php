@@ -11,7 +11,7 @@ $cpFileList = [
     '.htacess',
     'vendor',
 ];
-$cmd = "cd ~/work/reflectionTool/src &&"
+$cmd = "cd /home/vpsuser/work/reflectionTool/src &&"
     . "git pull origin develop &&"
     . "cp -r " . implode(" ", $cpFileList) . " /var/www/html/ "
     ;
