@@ -1,7 +1,7 @@
 <?php
 echo "Test pull";
-$cmd = "cd ~/work/reflectionTool/;"
-    . ""
+$cmd = "cd ~/work/reflectionTool/ &&"
+    . "git pull origin develop &&"
     . ""
     . ""
     . ""
