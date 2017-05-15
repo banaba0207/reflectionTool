@@ -27,15 +27,17 @@ class TaskDataModel extends \model\DataModel
         return $result;
     }
 
-     /* タスクを挿入する。既存タスクが存在する場合、それを終了する
+     /* タスクを挿入する
       * @param string $task
-      * @param int    $nowTaskDataId
+      * @param int    $isCutInTask 割り込みタスクであるか否か
       * @return bool
       */
-    public function addTask($task, $nowTaskDataId = null)
+    public function addTask($task, $isCutInTask)
     {
         // タスクの挿入
         $result = $this
+            ->set('task', $task)
+            ->set('isCutInTask', $isCutInTask)
             ->save('task', $task);
 
         return $result;

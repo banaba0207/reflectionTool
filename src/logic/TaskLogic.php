@@ -45,7 +45,7 @@ class TaskLogic
       * @param int    $nowTaskDataId
       * @return bool
       */
-    public function addTask($task, $nowTaskDataId = null)
+    public function addTask($task, $isCutInTask, $nowTaskDataId = null)
     {
         $taskDataModel = $this->getTaskDataModel();
 
@@ -55,7 +55,7 @@ class TaskLogic
         }
 
         // 新タスク挿入
-        return $taskDataModel->addTask($task);
+        return $taskDataModel->addTask($task, $isCutInTask);
     }
 
     /* 英文形式の日付を受け取り、日付の差分を返す

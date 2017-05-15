@@ -3,16 +3,21 @@
 
 <head>
     <link rel="stylesheet" href="/public_html/css/common.css" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <meta charset=“ UFT-8”>
     <title>reflection</title>
+    <script src="/public_html/js/common.js">
+
+    </script>
 </head>
 
 <body>
     <h1>Let's Reflection</h1>
 
     <!-- タスク入力フォーム -->
-    <form action="/task/addTask" method="post">
+    <form id="addTask" action="/task/addTask" method="post">
         <input name="task" style="width:300px;height:50px" autofocus />
+        <input type="hidden" name="isCutInTask"   value="0" />
         <input type="hidden" name="nowTaskDataId" value="{$nowTaskDataId}" />
         <button type="submit">更新</button>
     </form>
@@ -48,7 +53,7 @@
         </thead>
         <tbody>
             {foreach from=$taskDataList item=v}
-            <tr>
+            <tr {if $v.isCutInTask == '1'}style="background: #fef263;"{/if}>
                 <td>{$v.taskDataId}</td>
                 <td>{$v.task}</td>
                 <td>{$v.startTime}</td>

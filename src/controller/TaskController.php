@@ -40,7 +40,7 @@ class TaskController
 
         if (!empty($postData['task'])) {
             $taskLogic = new TaskLogic();
-            $taskLogic->addTask($postData['task'], $postData['nowTaskDataId']);
+            $taskLogic->addTask($postData['task'], $postData['isCutInTask'], $postData['nowTaskDataId']);
         }
 
         //  リダイレクト
