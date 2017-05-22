@@ -12,10 +12,16 @@ class TaskController
         $this->_request = new \plugin\Request();
     }
 
+    private function getUserId()
+    {
+        return $this->_request->getQuery('userId');
+    }
+
     public function index()
     {
+        $userId = $this->getUserId();
         $taskLogic = new TaskLogic();
-        $res = $taskLogic->getTaskList();
+        $res = $taskLogic->getTaskList($userId);
 
         $smarty = new Smarty();
         $smarty->template_dir = dirname(__DIR__) . '/view/templates';
@@ -27,6 +33,7 @@ class TaskController
         $nowTaskDataId = $nowTask['taskDataId'];
         $taskDataList  = $res['taskDataList'];
 
+        $smarty->assign('userId', $userId);
         $smarty->assign('nowTask', $nowTask);
         $smarty->assign('nowTaskDataId', $nowTaskDataId);
         $smarty->assign('taskDataList', $taskDataList);
@@ -37,14 +44,14 @@ class TaskController
     public function addTask()
     {
         $postData = $this->_request->getPost();
-
-        if (!empty($postData['task'])) {
+        $userId = $this->getUserId();
+        if (!empty($userId) && !empty($postData['task'])) {
             $taskLogic = new TaskLogic();
-            $taskLogic->addTask($postData['task'], $postData['isCutInTask'], $postData['nowTaskDataId']);
+            $taskLogic->addTask($userId, $postData['task'], $postData['isCutInTask'], $postData['nowTaskDataId']);
         }
 
         //  リダイレクト
-        $this->redirect("/task/index");
+        $this->redirect("/task/index/?userId=" . $userId);
     }
 
     public function redirect($url)

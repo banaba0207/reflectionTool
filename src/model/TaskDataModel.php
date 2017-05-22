@@ -15,11 +15,12 @@ class TaskDataModel extends \model\DataModel
     /* 本日中のタスクを取得
      * @return array
      */
-    public function getTaskList()
+    public function getTaskList($userId)
     {
         $date = date("Y-m-d");
 
         $result = $this
+            ->where('userId', '=', $userId)
             ->where('startTime', '>', $date)
             ->desc("taskDataId")
             ->toArray();
@@ -28,14 +29,16 @@ class TaskDataModel extends \model\DataModel
     }
 
      /* タスクを挿入する
+      * @param int    $userId
       * @param string $task
       * @param int    $isCutInTask 割り込みタスクであるか否か
       * @return bool
       */
-    public function addTask($task, $isCutInTask)
+    public function addTask($userId, $task, $isCutInTask)
     {
         // タスクの挿入
         $result = $this
+            ->set('userId', $userId)
             ->set('task', $task)
             ->set('isCutInTask', $isCutInTask)
             ->save('task', $task);

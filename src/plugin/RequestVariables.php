@@ -31,7 +31,11 @@ abstract class RequestVariables
     // 指定キーの存在確認
     public function has($key)
     {
-        if (array_key_exists($key, $this->_values)) {
+        if (empty($this->_values)) {
+            return false;
+        }
+
+        if (!array_key_exists($key, $this->_values)) {
             return false;
         }
 

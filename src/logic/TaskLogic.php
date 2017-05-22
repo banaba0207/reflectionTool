@@ -20,11 +20,11 @@ class TaskLogic
     /* タスク取得
      * @return array
      */
-    public function getTaskList()
+    public function getTaskList($userId)
     {
         $taskDataModel = $this->getTaskDataModel();
 
-        $taskDataList = $taskDataModel->getTaskList();
+        $taskDataList = $taskDataModel->getTaskList($userId);
 
         // 現在取り組んでいるタスクを取得
         $nowTask = array_shift($taskDataList);
@@ -45,7 +45,7 @@ class TaskLogic
       * @param int    $nowTaskDataId
       * @return bool
       */
-    public function addTask($task, $isCutInTask, $nowTaskDataId = null)
+    public function addTask($userId, $task, $isCutInTask, $nowTaskDataId = null)
     {
         $taskDataModel = $this->getTaskDataModel();
 
@@ -55,7 +55,7 @@ class TaskLogic
         }
 
         // 新タスク挿入
-        return $taskDataModel->addTask($task, $isCutInTask);
+        return $taskDataModel->addTask($userId, $task, $isCutInTask);
     }
 
     /* 英文形式の日付を受け取り、日付の差分を返す
