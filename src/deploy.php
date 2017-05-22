@@ -6,6 +6,7 @@ $cpFileList = [
     'logic',
     'model',
     'view',
+    'plugin',
     'public_html',
     'index.html',
     '.htaccess',
