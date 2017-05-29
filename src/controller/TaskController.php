@@ -25,7 +25,7 @@ class TaskController
 
         $smarty = new Smarty();
         $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
         $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
@@ -39,6 +39,58 @@ class TaskController
         $smarty->assign('taskDataList', $taskDataList);
 
         $smarty->display('index.tpl');
+    }
+
+    public function dailyReport()
+    {
+        $userId = $this->getUserId();
+        $date   = $this->_request->getQuery('date');
+
+        $taskLogic = new TaskLogic();
+        $res = $taskLogic->getTaskListByDate($userId, $date);
+
+        $smarty = new Smarty();
+        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
+        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+
+        // tplに渡す変数
+        $taskDataList  = $res['taskDataList'];
+        $reportData    = $res['reportData'];
+
+        $smarty->assign('userId', $userId);
+        $smarty->assign('taskDataList', $taskDataList);
+        $smarty->assign('reportData', $reportData);
+        $smarty->assign('date', $date);
+
+        $smarty->display('report.tpl');
+    }
+
+    public function report()
+    {
+        $userId = $this->getUserId();
+        $startDate = $this->_request->getQuery('startDate');
+        $endDate   = $this->_request->getQuery('endDate');
+
+        $taskLogic = new TaskLogic();
+        $res = $taskLogic->getTaskListByDate($userId, $startDate, $endDate);
+
+        $smarty = new Smarty();
+        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
+        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+
+        // tplに渡す変数
+        $taskDataList  = $res['taskDataList'];
+        $reportData    = $res['reportData'];
+
+        $smarty->assign('userId',       $userId);
+        $smarty->assign('taskDataList', $taskDataList);
+        $smarty->assign('reportData',   $reportData);
+        $smarty->assign('startDate',    $startDate);
+        $smarty->assign('endDate',      $endDate);
+
+        $smarty->display('report.tpl');
     }
 
     public function addTask()

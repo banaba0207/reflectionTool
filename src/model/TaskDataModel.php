@@ -12,7 +12,8 @@ class TaskDataModel extends \model\DataModel
         return $this->_tableName;
     }
 
-    /* 本日中のタスクを取得
+    /*
+     * 本日中のタスクを取得
      * @return array
      */
     public function getTaskList($userId)
@@ -28,7 +29,36 @@ class TaskDataModel extends \model\DataModel
         return $result;
     }
 
-     /* タスクを挿入する
+    /*
+     * 指定された日付のタスクを取得
+     * @return array
+     */
+    public function getTaskListByDate($userId, $date)
+    {
+        $startDate = date("Y-m-d 00:00:00", strtotime($date));
+        $endDate   = date("Y-m-d 00:00:00", strtotime("+1 day", strtotime($startTime)));
+
+        return $this->getTaskLisBetweenDate($userId, $startDate, $endDate);
+    }
+
+    /*
+     * 指定された日付間のタスクを取得
+     * @return array
+     */
+    public function getTaskLisBetweenDate($userId, $startDate, $endDate)
+    {
+        $result = $this
+            ->where('userId',    '=',  $userId)
+            ->where('startTime', '>=', $startDate)
+            ->where('startTime', '<=', $endDate)
+            ->desc("taskDataId")
+            ->toArray();
+
+        return $result;
+    }
+
+     /*
+      * タスクを挿入する
       * @param int    $userId
       * @param string $task
       * @param int    $isCutInTask 割り込みタスクであるか否か
@@ -46,7 +76,8 @@ class TaskDataModel extends \model\DataModel
         return $result;
     }
 
-    /* タスクを終了する
+    /*
+     * タスクを終了する
      * @param int    $nowTaskDataId
      * @return bool
      */
@@ -59,7 +90,8 @@ class TaskDataModel extends \model\DataModel
        return $result;
    }
 
-   /* タスクを更新
+   /*
+    * タスクを更新
     * @param int    $taskDataId
     * @param string $task
     * @param int    $isCutInTask
