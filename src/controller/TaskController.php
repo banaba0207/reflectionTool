@@ -41,6 +41,30 @@ class TaskController
         $smarty->display('index.tpl');
     }
 
+    public function allTask()
+    {
+        $userId = $this->getUserId();
+        $taskLogic = new TaskLogic();
+        $res = $taskLogic->getTaskListAll($userId);
+
+        $smarty = new Smarty();
+        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
+        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+
+        // tplに渡す変数
+        $nowTask       = $res['nowTask'];
+        $nowTaskDataId = $nowTask['taskDataId'];
+        $taskDataList  = $res['taskDataList'];
+
+        $smarty->assign('userId', $userId);
+        $smarty->assign('nowTask', $nowTask);
+        $smarty->assign('nowTaskDataId', $nowTaskDataId);
+        $smarty->assign('taskDataList', $taskDataList);
+
+        $smarty->display('index.tpl');
+    }
+
     public function dailyReport()
     {
         $userId = $this->getUserId();
@@ -112,7 +136,6 @@ class TaskController
         $userId = $this->getUserId();
         var_dump($postData);
         if (isset($postData['taskDataId']) && isset($postData['task']) && isset($postData['isCutInTask']) && isset($postData['startTime']) && isset($postData['endTime'])) {
-            echo "INININ";
             $taskLogic = new TaskLogic();
             $taskLogic->updateTask(
                 $postData['taskDataId'],

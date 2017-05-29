@@ -22,7 +22,23 @@ class TaskDataModel extends \model\DataModel
 
         $result = $this
             ->where('userId', '=', $userId)
-            // ->where('startTime', '>', $date)
+            ->where('startTime', '>', $date)
+            ->desc("taskDataId")
+            ->toArray();
+
+        return $result;
+    }
+
+    /*
+     * 全タスクを取得
+     * @return array
+     */
+    public function getTaskListAll($userId)
+    {
+        $date = date("Y-m-d");
+
+        $result = $this
+            ->where('userId', '=', $userId)
             ->desc("taskDataId")
             ->toArray();
 

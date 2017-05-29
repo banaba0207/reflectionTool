@@ -17,7 +17,8 @@ class TaskLogic
         return $this->_taskDataModel;
     }
 
-    /* タスク取得
+    /*
+     * タスク取得
      * @return array
      */
     public function getTaskList($userId)
@@ -25,6 +26,30 @@ class TaskLogic
         $taskDataModel = $this->getTaskDataModel();
 
         $taskDataList = $taskDataModel->getTaskList($userId);
+
+        // 現在取り組んでいるタスクを取得
+        $nowTask = array_shift($taskDataList);
+
+        // タスク毎に、要した時間を計算
+        foreach ($taskDataList as &$task) {
+            $task["diffTime"] = $this->_timeDiffString($task['startTime'], $task['endTime']);
+        }
+
+        return array(
+            'nowTask'      => $nowTask,
+            'taskDataList' => $taskDataList
+        );
+    }
+
+    /*
+     * タスク取得
+     * @return array
+     */
+    public function getTaskListAll($userId)
+    {
+        $taskDataModel = $this->getTaskDataModel();
+
+        $taskDataList = $taskDataModel->getTaskListAll($userId);
 
         // 現在取り組んでいるタスクを取得
         $nowTask = array_shift($taskDataList);
@@ -92,7 +117,8 @@ class TaskLogic
         );
     }
 
-     /* タスクを挿入する。既存タスクが存在する場合、それを終了する
+     /*
+      * タスクを挿入する。既存タスクが存在する場合、それを終了する
       * @param string $task
       * @param int    $nowTaskDataId
       * @return bool
@@ -110,7 +136,8 @@ class TaskLogic
         return $taskDataModel->addTask($userId, $task, $isCutInTask);
     }
 
-    /* タスクを更新
+    /*
+     * タスクを更新
      * @param int    $taskDataId
      * @param string $task
      * @param int    $isCutInTask
@@ -124,7 +151,8 @@ class TaskLogic
        return $taskDataModel->updateTask($taskDataId, $task, $isCutInTask, $startTime, $endTime);
    }
 
-    /* 英文形式の日付を受け取り、日付の差分を返す
+    /*
+     * 英文形式の日付を受け取り、日付の差分を返す
      * @param string $startTime
      * @param string $endTime
      * @return string
@@ -137,7 +165,8 @@ class TaskLogic
         return $this->_formatTime($diff);
     }
 
-    /* 英文形式の日付を受け取り、日付の差分を秒数で返す
+    /*
+     * 英文形式の日付を受け取り、日付の差分を秒数で返す
      * @param string $startTime
      * @param string $endTime
      * @return string
@@ -153,7 +182,8 @@ class TaskLogic
         return $diff;
     }
 
-    /* 秒数を受け取り、分秒の形式にして返す
+    /*
+     * 秒数を受け取り、分秒の形式にして返す
      * @param string $startTime
      * @param string $endTime
      * @return string
