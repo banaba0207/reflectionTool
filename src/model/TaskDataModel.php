@@ -22,7 +22,7 @@ class TaskDataModel extends \model\DataModel
 
         $result = $this
             ->where('userId', '=', $userId)
-            ->where('startTime', '>', $date)
+            // ->where('startTime', '>', $date)
             ->desc("taskDataId")
             ->toArray();
 
