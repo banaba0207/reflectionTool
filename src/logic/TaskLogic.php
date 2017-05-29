@@ -58,6 +58,20 @@ class TaskLogic
         return $taskDataModel->addTask($userId, $task, $isCutInTask);
     }
 
+    /* タスクを更新
+     * @param int    $taskDataId
+     * @param string $task
+     * @param int    $isCutInTask
+     * @param string $startTime
+     * @param string $endTime
+     * @return bool
+     */
+   public function updateTask($taskDataId, $task, $isCutInTask, $startTime, $endTime)
+   {
+       $taskDataModel = $this->getTaskDataModel();
+       return $taskDataModel->updateTask($taskDataId, $task, $isCutInTask, $startTime, $endTime);
+   }
+
     /* 英文形式の日付を受け取り、日付の差分を返す
      * @param string $startTime
      * @param string $endTime

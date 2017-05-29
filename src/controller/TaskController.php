@@ -54,6 +54,27 @@ class TaskController
         $this->redirect("/task/index/?userId=" . $userId);
     }
 
+    public function updateTask()
+    {
+        $postData = $this->_request->getPost();
+        $userId = $this->getUserId();
+        var_dump($postData);
+        if (isset($postData['taskDataId']) && isset($postData['task']) && isset($postData['isCutInTask']) && isset($postData['startTime']) && isset($postData['endTime'])) {
+            echo "INININ";
+            $taskLogic = new TaskLogic();
+            $taskLogic->updateTask(
+                $postData['taskDataId'],
+                $postData['task'],
+                $postData['isCutInTask'],
+                $postData['startTime'],
+                $postData['endTime']
+             );
+        }
+
+        //  リダイレクト
+        $this->redirect("/task/index/?userId=" . $userId);
+    }
+
     public function redirect($url)
     {
         header("Location: " . $url);

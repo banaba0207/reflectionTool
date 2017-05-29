@@ -58,4 +58,25 @@ class TaskDataModel extends \model\DataModel
 
        return $result;
    }
+
+   /* タスクを更新
+    * @param int    $taskDataId
+    * @param string $task
+    * @param int    $isCutInTask
+    * @param string $startTime
+    * @param string $endTime
+    * @return bool
+    */
+  public function updateTask($taskDataId, $task, $isCutInTask, $startTime, $endTime)
+  {
+      $result = $this
+          ->set('task', $task)
+          ->set('isCutInTask', $isCutInTask)
+          ->set('startTime', $startTime)
+          ->set('endTime', $endTime)
+          ->where('taskDataId', '=', $taskDataId)
+          ->update();
+
+      return $result;
+  }
 }
