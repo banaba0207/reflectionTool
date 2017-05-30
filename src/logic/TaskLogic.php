@@ -51,16 +51,12 @@ class TaskLogic
 
         $taskDataList = $taskDataModel->getTaskListAll($userId);
 
-        // 現在取り組んでいるタスクを取得
-        $nowTask = array_shift($taskDataList);
-
         // タスク毎に、要した時間を計算
         foreach ($taskDataList as &$task) {
             $task["diffTime"] = $this->_timeDiffString($task['startTime'], $task['endTime']);
         }
 
         return array(
-            'nowTask'      => $nowTask,
             'taskDataList' => $taskDataList
         );
     }

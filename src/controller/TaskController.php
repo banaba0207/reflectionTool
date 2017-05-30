@@ -53,16 +53,12 @@ class TaskController
         $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
-        $nowTask       = $res['nowTask'];
-        $nowTaskDataId = $nowTask['taskDataId'];
         $taskDataList  = $res['taskDataList'];
 
         $smarty->assign('userId', $userId);
-        $smarty->assign('nowTask', $nowTask);
-        $smarty->assign('nowTaskDataId', $nowTaskDataId);
         $smarty->assign('taskDataList', $taskDataList);
 
-        $smarty->display('index.tpl');
+        $smarty->display('all_task.tpl');
     }
 
     public function dailyReport()
@@ -127,14 +123,14 @@ class TaskController
         }
 
         //  リダイレクト
-        $this->redirect("/task/index/?userId=" . $userId);
+        $this->redirect( $_SERVER['HTTP_REFERER']);
     }
 
     public function updateTask()
     {
         $postData = $this->_request->getPost();
         $userId = $this->getUserId();
-        var_dump($postData);
+
         if (isset($postData['taskDataId']) && isset($postData['task']) && isset($postData['isCutInTask']) && isset($postData['startTime']) && isset($postData['endTime'])) {
             $taskLogic = new TaskLogic();
             $taskLogic->updateTask(
@@ -147,7 +143,7 @@ class TaskController
         }
 
         //  リダイレクト
-        $this->redirect("/task/index/?userId=" . $userId);
+        $this->redirect( $_SERVER['HTTP_REFERER']);
     }
 
     public function redirect($url)
