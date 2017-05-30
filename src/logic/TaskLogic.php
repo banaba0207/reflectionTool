@@ -89,32 +89,59 @@ class TaskLogic
         $taskDataList = $taskDataModel->getTaskLisBetweenDate($userId, $startDate, $endDate);
 
         // タスク毎に、要した時間を計算
-        $normalTaskTime = 0;
-        $cutInTaskTime  = 0;
+        $reportByDateList = array();
         foreach ($taskDataList as &$task) {
             $time = $this->_timeDiff($task['startTime'], $task['endTime']);
             $task["diffTime"] = $this->_formatTime($time);
 
+            $date = date("Y-m-d", strtotime($task['startTime']));
+
+            if (empty($reportByDateList[$date])) {
+                $reportByDateList[$date] = array(
+                    "date"           => $date,
+                    "normalTaskTime" => 0,
+                    "cutInTaskTime"  => 0,
+                );
+            }
+
             if($task["isCutInTask"]) {
-                $cutInTaskTime += $time;
+                $reportByDateList[$date]["cutInTaskTime"]  += $time;
             } else {
-                $normalTaskTime += $time;
+                $reportByDateList[$date]["normalTaskTime"] += $time;
             }
         }
 
-        $allTime = $normalTaskTime + $cutInTaskTime;
+        // 日毎のレポート作成
+        $normalTaskTimeAll = 0;
+        $cutInTaskTimeAll  = 0;
+        foreach($reportByDateList as &$report) {
+            $normalTaskTimeAll += $report["normalTaskTime"];
+            $cutInTaskTimeAll  += $report["cutInTaskTime"];
 
+            $allTime = $report["normalTaskTime"] + $report["cutInTaskTime"];
+            $report = array(
+                "normalTaskTime"     => $this->_formatTime($report["normalTaskTime"]),
+                "cutInTaskTime"      => $this->_formatTime($report["cutInTaskTime"]),
+                "normalTaskTimeRate" => round($report["normalTaskTime"] / $allTime * 100, 1),
+                "cutInTaskTimeRate"  => round($report["cutInTaskTime"]  / $allTime * 100, 1),
+                "allTime"            => $this->_formatTime($allTime),
+            );
+        }
+
+        // 全体のレポート作成
+        $allTime = $normalTaskTimeAll + $cutInTaskTimeAll;
         $reportData = array(
-            "normalTaskTime"     => $this->_formatTime($normalTaskTime),
-            "cutInTaskTime"      => $this->_formatTime($cutInTaskTime),
-            "normalTaskTimeRate" => round($normalTaskTime / $allTime * 100, 1),
-            "cutInTaskTimeRate"  => round($cutInTaskTime /  $allTime * 100, 1),
+            "normalTaskTime"     => $this->_formatTime($normalTaskTimeAll),
+            "cutInTaskTime"      => $this->_formatTime($cutInTaskTimeAll),
+            "normalTaskTimeRate" => round($normalTaskTimeAll / $allTime * 100, 1),
+            "cutInTaskTimeRate"  => round($cutInTaskTimeAll  / $allTime * 100, 1),
             "allTime"            => $this->_formatTime($allTime),
         );
 
         return array(
-            'taskDataList' => $taskDataList,
-            'reportData'   => $reportData,
+            'taskDataList'     => $taskDataList,
+            'reportByDateList' => $reportByDateList,
+            'reportData'       => $reportData,
         );
     }
 

@@ -22,6 +22,7 @@ UserId:
     <input name="userId" value="{$userId|default:0}" style="width:100px;height:30px"/>
     <button type="submit">更新</button>
 </form>
+<hr>
 
 {if !empty($userId)}
     <h1>Let's Reflection
@@ -32,6 +33,8 @@ UserId:
         {/if}
         Report
     </h1>
+
+    <h3>ALL</h3>
     <table class="type09">
         <thead>
         <tr>
@@ -48,6 +51,31 @@ UserId:
         </tr>
         </tbody>
     </table>
+    <hr>
+
+    <h3>日毎</h3>
+    <table class="type09">
+        <thead>
+        <tr>
+            <th>日時</th>
+            <th>定常タスク時間</th>
+            <th>割り込みタスク時間</th>
+            <th>全体タスク時間</th>
+        </tr>
+        </thead>
+        <tbody>
+            {foreach from=$reportByDateList key=date item=v}
+                <tr>
+                    <td>{$date}</td>
+                    <td>{$v.normalTaskTime}<br>{$v.normalTaskTimeRate} %</td>
+                    <td>{$v.cutInTaskTime}<br>{$v.cutInTaskTimeRate} %</td>
+                    <td>{$v.allTime}</td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    <hr>
+
     <h3>タスク一覧</h3>
     <table class="type09">
         <thead>
