@@ -146,6 +146,20 @@ class TaskController
         $this->redirect( $_SERVER['HTTP_REFERER']);
     }
 
+    public function finishTask()
+    {
+        $postData = $this->_request->getPost();
+        $userId = $this->getUserId();
+
+        if (isset($postData['taskDataId'])) {
+            $taskLogic = new TaskLogic();
+            $taskLogic->finishTask($postData['taskDataId']);
+        }
+
+        //  リダイレクト
+        $this->redirect( $_SERVER['HTTP_REFERER']);
+    }
+
     public function redirect($url)
     {
         header("Location: " . $url);

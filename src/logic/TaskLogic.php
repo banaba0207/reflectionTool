@@ -29,6 +29,10 @@ class TaskLogic
 
         // 現在取り組んでいるタスクを取得
         $nowTask = array_shift($taskDataList);
+        if ($nowTask["isClosed"] == TaskDataModel::IS_CLOSED) {
+            array_unshift($taskDataList, $nowTask);
+            $nowTask = null;
+        }
 
         // タスク毎に、要した時間を計算
         foreach ($taskDataList as &$task) {
@@ -146,6 +150,21 @@ class TaskLogic
        $taskDataModel = $this->getTaskDataModel();
        return $taskDataModel->updateTask($taskDataId, $task, $isCutInTask, $startTime, $endTime);
    }
+
+   /*
+    * タスクを更新
+    * @param int    $taskDataId
+    * @param string $task
+    * @param int    $isCutInTask
+    * @param string $startTime
+    * @param string $endTime
+    * @return bool
+    */
+  public function finishTask($taskDataId)
+  {
+      $taskDataModel = $this->getTaskDataModel();
+      return $taskDataModel->endTask($nowTaskDataId);
+  }
 
     /*
      * 英文形式の日付を受け取り、日付の差分を返す
