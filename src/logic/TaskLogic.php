@@ -29,6 +29,7 @@ class TaskLogic
 
         // 現在取り組んでいるタスクを取得
         $nowTask = array_shift($taskDataList);
+
         if ($nowTask["isClosed"] == TaskDataModel::IS_CLOSED) {
             array_unshift($taskDataList, $nowTask);
             $nowTask = null;
@@ -163,7 +164,7 @@ class TaskLogic
   public function finishTask($taskDataId)
   {
       $taskDataModel = $this->getTaskDataModel();
-      return $taskDataModel->endTask($nowTaskDataId);
+      return $taskDataModel->endTask($taskDataId);
   }
 
     /*

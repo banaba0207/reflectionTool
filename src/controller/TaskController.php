@@ -152,6 +152,7 @@ class TaskController
         $userId = $this->getUserId();
 
         if (isset($postData['taskDataId'])) {
+
             $taskLogic = new TaskLogic();
             $taskLogic->finishTask($postData['taskDataId']);
         }

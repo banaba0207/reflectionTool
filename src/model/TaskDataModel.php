@@ -84,10 +84,10 @@ class TaskDataModel extends \model\DataModel
      * @param int    $nowTaskDataId
      * @return bool
      */
-    public function endTask($nowTaskDataId)
+    public function endTask($taskDataId)
     {
         $result = $this
-            ->where('taskDataId', '=', $nowTaskDataId)
+            ->where('taskDataId', '=', $taskDataId)
             ->update('isClosed', self::IS_CLOSED);
 
         return $result;

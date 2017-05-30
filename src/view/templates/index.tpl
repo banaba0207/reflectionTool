@@ -50,8 +50,8 @@ UserId:
                 <td>{$nowTask['task']}</td>
                 <td>{$nowTask['startTime']}</td>
                 <td>
-                    <form id="addTask" action="/task/finishTask/?userId={$userId|default:0}" method="post">
-                        <input type="hidden" name="taskDataId" value="{$nowTaskDataId}"/>
+                    <form action="/task/finishTask/?userId={$userId|default:0}" method="post">
+                        <input type="hidden" name="taskDataId" value="{$nowTask['taskDataId']}"/>
                         <button type="submit">終了</button>
                     </form>
                 </td>
