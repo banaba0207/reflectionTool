@@ -30,9 +30,9 @@ class Dispatcher
         }
 
         // コントローラー名作成
-        $className = ucfirst(strtolower($controller)). "Controller";
+        $className = ucfirst(strtolower($controller)) . "Controller";
         // コントローラーのパスを作成
-        $classPath = $this->sysRoot. '/controller/'. $className. '.php';
+        $classPath = $this->sysRoot . '/controller/' . $className . '.php';
         require_once $classPath;
 
         // インスタンス生成

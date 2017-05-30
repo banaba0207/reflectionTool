@@ -19,9 +19,9 @@ class TaskController
 
     public function index()
     {
-        $userId = $this->getUserId();
+        $userId    = $this->getUserId();
         $taskLogic = new TaskLogic();
-        $res = $taskLogic->getTaskList($userId);
+        $res       = $taskLogic->getTaskList($userId);
 
         $smarty = new Smarty();
         $smarty->template_dir = dirname(__DIR__) . '/view/templates';
@@ -29,9 +29,9 @@ class TaskController
         $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
-        $nowTask       = $res['nowTask'];
+        $nowTask = $res['nowTask'];
         $nowTaskDataId = $nowTask['taskDataId'];
-        $taskDataList  = $res['taskDataList'];
+        $taskDataList = $res['taskDataList'];
 
         $smarty->assign('userId', $userId);
         $smarty->assign('nowTask', $nowTask);
@@ -68,19 +68,19 @@ class TaskController
     public function dailyReport()
     {
         $userId = $this->getUserId();
-        $date   = $this->_request->getQuery('date');
+        $date = $this->_request->getQuery('date');
 
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskListByDate($userId, $date);
 
         $smarty = new Smarty();
         $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
-        $taskDataList  = $res['taskDataList'];
-        $reportData    = $res['reportData'];
+        $taskDataList = $res['taskDataList'];
+        $reportData = $res['reportData'];
 
         $smarty->assign('userId', $userId);
         $smarty->assign('taskDataList', $taskDataList);
@@ -94,25 +94,25 @@ class TaskController
     {
         $userId = $this->getUserId();
         $startDate = $this->_request->getQuery('startDate');
-        $endDate   = $this->_request->getQuery('endDate');
+        $endDate = $this->_request->getQuery('endDate');
 
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskListByDate($userId, $startDate, $endDate);
 
         $smarty = new Smarty();
         $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
+        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
+        $smarty->cache_dir = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
-        $taskDataList  = $res['taskDataList'];
-        $reportData    = $res['reportData'];
+        $taskDataList = $res['taskDataList'];
+        $reportData = $res['reportData'];
 
-        $smarty->assign('userId',       $userId);
+        $smarty->assign('userId', $userId);
         $smarty->assign('taskDataList', $taskDataList);
-        $smarty->assign('reportData',   $reportData);
-        $smarty->assign('startDate',    $startDate);
-        $smarty->assign('endDate',      $endDate);
+        $smarty->assign('reportData', $reportData);
+        $smarty->assign('startDate', $startDate);
+        $smarty->assign('endDate', $endDate);
 
         $smarty->display('report.tpl');
     }
@@ -143,7 +143,7 @@ class TaskController
                 $postData['isCutInTask'],
                 $postData['startTime'],
                 $postData['endTime']
-             );
+            );
         }
 
         //  リダイレクト

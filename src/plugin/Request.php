@@ -11,7 +11,7 @@ class Request
     // コンストラクタ@
     public function __construct()
     {
-        $this->post  = new Post();
+        $this->post = new Post();
         $this->query = new QueryString();
     }
 

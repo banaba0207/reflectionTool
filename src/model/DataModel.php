@@ -7,14 +7,14 @@ abstract class DataModel
 
     // SELECT句作成用
     private $_columns = array();
-    private $_orders = array();
+    private $_orders  = array();
 
     // INSERT, UPDATE句生成用
-    private $_sets = array();
+    private $_sets      = array();
     private $_set_binds = array();
 
     // WHERE句生成用
-    private $_conditions = array();
+    private $_conditions      = array();
     private $_condition_binds = array();
 
     abstract public function getTableName();
@@ -26,7 +26,7 @@ abstract class DataModel
             'root',
             '',
             array(\PDO::ATTR_EMULATE_PREPARES => false)
-         );
+        );
     }
 
     private function _init()
@@ -56,7 +56,7 @@ abstract class DataModel
                 $this->_condition_binds[] = $v;
             }
         } else {
-            $this->_conditions[]      = sprintf("%s %s ?", $column, $separetor);
+            $this->_conditions[] = sprintf("%s %s ?", $column, $separetor);
             $this->_condition_binds[] = $value;
         }
     }
@@ -190,66 +190,66 @@ abstract class DataModel
     }
 
     /**
-      * 挿入・更新値セット
-      *
-      * @param string $column カラム名
-      * @param mixed $value 値
-      *
-      * @return Qb 自分自身のインスタンス
-      */
-     public function set($column, $value = null)
-     {
-         if (is_array($column)) {
-             $sets = $column;
-         } else {
-             $sets = [$column => $value];
-         }
-         $this->_sets += $sets;
-         return $this;
-     }
-
-     /**
-      * UPDATE or INSERT
-      *
-      * @param string $column カラム名
-      * @param mixed $value 値
-      *
-      * @return string プライマリキーの値
-      */
-     public function save($column = null, $value = null)
-     {
-         if ($column) {
-             $this->set($column, $value);
-         }
-         $st = $this->_build();
-         return $this->_db->lastInsertId();
-     }
-
-     /**
-      * UPDATE
-      *
-      * @param string $column カラム名
-      * @param mixed $value 値
-      *
-      * @return string プライマリキーの値
-      */
-     public function update($column = null, $value = null)
-     {
-         if ($column) {
-             $this->set($column, $value);
-         }
-
-         $st = $this->_build(['only_update' => true]);
-         return $this->_db->lastInsertId();
-     }
+     * 挿入・更新値セット
+     *
+     * @param string $column カラム名
+     * @param mixed $value 値
+     *
+     * @return Qb 自分自身のインスタンス
+     */
+    public function set($column, $value = null)
+    {
+        if (is_array($column)) {
+            $sets = $column;
+        } else {
+            $sets = [$column => $value];
+        }
+        $this->_sets += $sets;
+        return $this;
+    }
 
     /**
-    * ORDER BY ASC
-    *
-    * @param string $column カラム名
-    *
-    * @return Qb 自分自身のインスタンス
-    */
+     * UPDATE or INSERT
+     *
+     * @param string $column カラム名
+     * @param mixed $value 値
+     *
+     * @return string プライマリキーの値
+     */
+    public function save($column = null, $value = null)
+    {
+        if ($column) {
+            $this->set($column, $value);
+        }
+        $st = $this->_build();
+        return $this->_db->lastInsertId();
+    }
+
+    /**
+     * UPDATE
+     *
+     * @param string $column カラム名
+     * @param mixed $value 値
+     *
+     * @return string プライマリキーの値
+     */
+    public function update($column = null, $value = null)
+    {
+        if ($column) {
+            $this->set($column, $value);
+        }
+
+        $st = $this->_build(['only_update' => true]);
+        return $this->_db->lastInsertId();
+    }
+
+    /**
+     * ORDER BY ASC
+     *
+     * @param string $column カラム名
+     *
+     * @return Qb 自分自身のインスタンス
+     */
     public function asc($column)
     {
         $this->_orders[] = sprintf("%s ASC", $column);
@@ -257,12 +257,12 @@ abstract class DataModel
     }
 
     /**
-    * ORDER BY DESC
-    *
-    * @param string $column カラム名
-    *
-    * @return Qb 自分自身のインスタンス
-    */
+     * ORDER BY DESC
+     *
+     * @param string $column カラム名
+     *
+     * @return Qb 自分自身のインスタンス
+     */
     public function desc($column)
     {
         $this->_orders[] = sprintf("%s DESC", $column);
