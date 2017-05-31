@@ -102,6 +102,7 @@ UserId:
         </tbody>
     </table>
 {/if}
+<hr>
 </body>
 
 </html>

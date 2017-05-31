@@ -27,3 +27,8 @@ table.type09 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
+
+hr {
+    background-color: #fff;
+    border-top: 1px dashed #0068B7;
+}
