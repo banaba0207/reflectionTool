@@ -75,11 +75,13 @@ class TaskController
         $smarty->cache_dir = dirname(__DIR__) . '/tmp/cache';
 
         // tplに渡す変数
-        $taskDataList = $res['taskDataList'];
-        $reportData = $res['reportData'];
+        $taskDataList     = $res['taskDataList'];
+        $reportByDateList = $res['reportByDateList'];
+        $reportData       = $res['reportData'];
 
         $smarty->assign('userId', $userId);
         $smarty->assign('taskDataList', $taskDataList);
+        $smarty->assign('reportByDateList', $reportByDateList);
         $smarty->assign('reportData', $reportData);
         $smarty->assign('date', $date);
 
