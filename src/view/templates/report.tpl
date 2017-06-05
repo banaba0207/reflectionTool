@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html lang=“ ja”>
+{extends file="layout.tpl"}
 
-<head>
-    <link rel="stylesheet" href="/public_html/css/common.css" type="text/css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"
-          type="text/css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
-    <meta charset=“ UFT-8”>
-    <title>reflection</title>
-    <script src="/public_html/js/common.js">
-
-    </script>
-</head>
-
-<body style="margin:10px 50px">
-<!-- UserId入力フォーム -->
-UserId:
-<form id="updateUserId" action="/task/index/?userId={$userId|default:0}" method="get">
-    <input name="userId" value="{$userId|default:0}" style="width:100px;height:30px"/>
-    <button type="submit">更新</button>
-</form>
-<hr>
-
-{if !empty($userId)}
-    <h1>Let's Reflection
+{block name="contents"}
+    <h1>
         {if !empty($date)}
             {$date}
         {else}
@@ -101,8 +77,4 @@ UserId:
         {/foreach}
         </tbody>
     </table>
-{/if}
-<hr>
-</body>
-
-</html>
+{/block}
