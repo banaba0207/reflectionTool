@@ -87,6 +87,13 @@ class TaskLogic
         }
 
         $taskDataList = $taskDataModel->getTaskLisBetweenDate($userId, $startDate, $endDate);
+        if(empty($taskDataList)) {
+            return array(
+                'taskDataList'     => array(),
+                'reportByDateList' => array(),
+                'reportData'       => array(),
+            );
+        }
 
         // タスク毎に、要した時間を計算
         $reportByDateList = array();
