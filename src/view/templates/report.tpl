@@ -21,9 +21,9 @@
         </thead>
         <tbody>
         <tr>
-            <td>{$reportData.normalTaskTime}<br>{$reportData.normalTaskTimeRate} %</td>
-            <td>{$reportData.cutInTaskTime}<br>{$reportData.cutInTaskTimeRate} %</td>
-            <td>{$reportData.allTime}</td>
+            <td>{$reportData.normalTaskTime|default:0}<br>{$reportData.normalTaskTimeRate|default:0} %</td>
+            <td>{$reportData.cutInTaskTime|default:0}<br>{$reportData.cutInTaskTimeRate|default:0} %</td>
+            <td>{$reportData.allTime|default:0}</td>
         </tr>
         </tbody>
     </table>
