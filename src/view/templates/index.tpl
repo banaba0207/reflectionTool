@@ -15,13 +15,28 @@
     </script>
 </head>
 
-<body style="margin:10px 50px">
-<!-- UserId入力フォーム -->
-UserId:
-<form id="updateUserId" action="/task/index/?userId={$userId|default:0}" method="get">
-    <input name="userId" value="{$userId|default:0}" style="width:100px;height:30px"/>
-    <button type="submit">更新</button>
-</form>
+<!-- 日付計算 -->
+{$nowDate        = $smarty.now|date_format:"%Y-%m-%d"}
+{$oneWeekAgoDate = ($smarty.now-24*60*60*7)|date_format:"%Y-%m-%d"}
+
+<div class="ui menu">
+  <div class="header item">
+    Let's Reflection!
+  </div>
+  <a class="item">
+      <form class="ui form" id="updateUserId" action="/task/index/?userId={$userId|default:0}" method="get">
+          <div class="ui labeled action input">
+              <div class="ui label">UserID</div>
+              <input name="userId" value="{$userId|default:0}" style="width:100px;"/>
+              <button class="ui button" type="submit">更新</button>
+          </div>
+      </form>
+  </a>
+  <a href="/task/index/?userId={$userId}" class="active item">Home</a>
+  <a href="/task/allTask/?userId={$userId}" class="item">All Task</a>
+  <a href="/task/dailyReport/?userId={$userId}&date={$nowDate}" class="item">Daily Report</a>
+  <a href="/task/report/?userId={$userId}&startDate={$oneWeekAgoDate}&endDate={$nowDate}" class="item">Weekly Report</a>
+</div>
 
 {if !empty($userId)}
     <h1>Let's Reflection</h1>
