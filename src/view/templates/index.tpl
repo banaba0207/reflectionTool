@@ -8,7 +8,7 @@
     <form id="addTask" action="/task/addTask/?userId={$userId|default:0}" method="post">
         <input name="task" style="width:300px;height:50px" autofocus/>
         <input type="hidden" name="isCutInTask" value="0"/>
-        <input type="hidden" name="nowTaskDataId" value="{$nowTaskData.taskDataId}"/>
+        <input type="hidden" name="nowTaskDataId" value="{$nowTask.taskDataId}"/>
     </form>
 
     {if !empty($nowTask)}
