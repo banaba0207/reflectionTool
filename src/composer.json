@@ -1,6 +1,7 @@
 {
     "autoload": {
         "psr-4": {
+            "controller\\": "controller/",
             "logic\\": "logic/",
             "model\\": "model/",
             "plugin\\": "plugin/"

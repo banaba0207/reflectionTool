@@ -33,7 +33,10 @@ class Dispatcher
         $className = ucfirst(strtolower($controller)) . "Controller";
         // コントローラーのパスを作成
         $classPath = $this->sysRoot . '/controller/' . $className . '.php';
+
         require_once $classPath;
+
+        $className = "\\controller\\" . $className;
 
         // インスタンス生成
         $controllerInstance = new $className();
@@ -44,7 +47,10 @@ class Dispatcher
             $action = $params[1];
         }
 
+        $controllerInstance->prefilter();
         // アクション実行
         $controllerInstance->$action();
+        
+        $controllerInstance->postfilter();
     }
 }

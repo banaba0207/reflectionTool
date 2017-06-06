@@ -1,21 +1,10 @@
 <?php
+namespace controller;
+
 use logic\TaskLogic;
 
-class TaskController
+class TaskController extends BaseController
 {
-    private $_request;
-
-    // コンストラクタ
-    function __construct()
-    {
-        // リクエスト
-        $this->_request = new \plugin\Request();
-    }
-
-    private function getUserId()
-    {
-        return $this->_request->getQuery('userId');
-    }
 
     public function index()
     {
@@ -23,22 +12,12 @@ class TaskController
         $taskLogic = new TaskLogic();
         $res       = $taskLogic->getTaskList($userId);
 
-        $smarty = new Smarty();
-        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
-
-        // tplに渡す変数
-        $nowTask = $res['nowTask'];
-        $nowTaskDataId = $nowTask['taskDataId'];
-        $taskDataList = $res['taskDataList'];
-
-        $smarty->assign('userId', $userId);
-        $smarty->assign('nowTask', $nowTask);
-        $smarty->assign('nowTaskDataId', $nowTaskDataId);
-        $smarty->assign('taskDataList', $taskDataList);
-
-        $smarty->display('index.tpl');
+        $this->getResponse()
+            ->withTemplate('index.tpl')
+            ->withValues([
+                'nowTask'      => $res['nowTask'],
+                'taskDataList' => $res['taskDataList'],
+            ]);
     }
 
     public function allTask()
@@ -163,10 +142,5 @@ class TaskController
 
         //  リダイレクト
         $this->redirect( $_SERVER['HTTP_REFERER']);
-    }
-
-    public function redirect($url)
-    {
-        header("Location: " . $url);
     }
 }

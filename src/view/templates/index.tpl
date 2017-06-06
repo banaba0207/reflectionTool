@@ -6,7 +6,7 @@
     <form id="addTask" action="/task/addTask/?userId={$userId|default:0}" method="post">
         <input name="task" style="width:300px;height:50px" autofocus/>
         <input type="hidden" name="isCutInTask" value="0"/>
-        <input type="hidden" name="nowTaskDataId" value="{$nowTaskDataId}"/>
+        <input type="hidden" name="nowTaskDataId" value="{$nowTaskData.taskDataId}"/>
         <button type="submit">更新</button>
     </form>
 
