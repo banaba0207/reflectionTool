@@ -26,45 +26,32 @@ class TaskController extends BaseController
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskListAll($userId);
 
-        $smarty = new Smarty();
-        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir  = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir    = dirname(__DIR__) . '/tmp/cache';
-
-        // tplに渡す変数
-        $taskDataList  = $res['taskDataList'];
-
-        $smarty->assign('userId', $userId);
-        $smarty->assign('taskDataList', $taskDataList);
-
-        $smarty->display('all_task.tpl');
+        $this->getResponse()
+            ->withTemplate('all_task.tpl')
+            ->withValues([
+                'taskDataList' => $res['taskDataList'],
+            ]);
     }
 
     public function dailyReport()
     {
         $userId = $this->getUserId();
-        $date = $this->_request->getQuery('date');
+        $date = $this->_request->getQuery('date', 0);
+        if(empty($date)) {
+            $date = date("Y-m-d");
+        }
 
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskListByDate($userId, $date);
 
-        $smarty = new Smarty();
-        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir = dirname(__DIR__) . '/tmp/cache';
-
-        // tplに渡す変数
-        $taskDataList     = $res['taskDataList'];
-        $reportByDateList = $res['reportByDateList'];
-        $reportData       = $res['reportData'];
-
-        $smarty->assign('userId', $userId);
-        $smarty->assign('taskDataList', $taskDataList);
-        $smarty->assign('reportByDateList', $reportByDateList);
-        $smarty->assign('reportData', $reportData);
-        $smarty->assign('date', $date);
-
-        $smarty->display('report.tpl');
+        $this->getResponse()
+            ->withTemplate('report.tpl')
+            ->withValues([
+                'taskDataList'     => $res['taskDataList'],
+                'reportByDateList' => $res['reportByDateList'],
+                'reportData'       => $res['reportData'],
+                'date'             => $date,
+            ]);
     }
 
     public function report()
@@ -76,24 +63,15 @@ class TaskController extends BaseController
         $taskLogic = new TaskLogic();
         $res = $taskLogic->getTaskListByDate($userId, $startDate, $endDate);
 
-        $smarty = new Smarty();
-        $smarty->template_dir = dirname(__DIR__) . '/view/templates';
-        $smarty->compile_dir = dirname(__DIR__) . '/tmp/templates_c';
-        $smarty->cache_dir = dirname(__DIR__) . '/tmp/cache';
-
-        // tplに渡す変数
-        $taskDataList     = $res['taskDataList'];
-        $reportByDateList = $res['reportByDateList'];
-        $reportData       = $res['reportData'];
-
-        $smarty->assign('userId', $userId);
-        $smarty->assign('taskDataList', $taskDataList);
-        $smarty->assign('reportByDateList', $reportByDateList);
-        $smarty->assign('reportData', $reportData);
-        $smarty->assign('startDate', $startDate);
-        $smarty->assign('endDate', $endDate);
-
-        $smarty->display('report.tpl');
+        $this->getResponse()
+            ->withTemplate('report.tpl')
+            ->withValues([
+                'taskDataList'     => $res['taskDataList'],
+                'reportByDateList' => $res['reportByDateList'],
+                'reportData'       => $res['reportData'],
+                'startDate'        => $startDate,
+                'endDate'          => $endDate,
+            ]);
     }
 
     public function addTask()
@@ -135,7 +113,6 @@ class TaskController extends BaseController
         $userId = $this->getUserId();
 
         if (isset($postData['taskDataId'])) {
-
             $taskLogic = new TaskLogic();
             $taskLogic->finishTask($postData['taskDataId']);
         }

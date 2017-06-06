@@ -18,6 +18,7 @@
     {$nowDate        = $smarty.now|date_format:"%Y-%m-%d"}
     {$oneWeekAgoDate = ($smarty.now-24*60*60*7)|date_format:"%Y-%m-%d"}
 
+    <!-- ヘッダーメニュー -->
     <div class="ui menu">
       <div class="header item">
         Let's Reflection!
@@ -26,7 +27,7 @@
           <form class="ui form" id="updateUserId" action="/task/index/?userId={$userId|default:0}" method="get">
               <div class="ui labeled action input">
                   <div class="ui label">UserID</div>
-                  <input name="userId" value="{$userId|default:0}" style="width:100px;"/>
+                  <input name="userId" value="{$userId|default:0}" style="width:70px;"/>
                   <button class="ui button" type="submit">更新</button>
               </div>
           </form>

@@ -1,13 +1,14 @@
 {extends file="layout.tpl"}
 
 {block name="contents"}
-    <h1>Let's Reflection!</h1>
+    <div class="ui info message">
+        <div class="header">Enter:通常タスク Shift + Enter:割り込みタスク</div>
+    </div>
     <!-- タスク入力フォーム -->
     <form id="addTask" action="/task/addTask/?userId={$userId|default:0}" method="post">
         <input name="task" style="width:300px;height:50px" autofocus/>
         <input type="hidden" name="isCutInTask" value="0"/>
         <input type="hidden" name="nowTaskDataId" value="{$nowTaskData.taskDataId}"/>
-        <button type="submit">更新</button>
     </form>
 
     {if !empty($nowTask)}
@@ -22,7 +23,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr {if $nowTask.isCutInTask == '1'}style="background: #fef263;"{/if}>
                 <td>{$nowTask['taskDataId']}</td>
                 <td>{$nowTask['task']}</td>
                 <td>{$nowTask['startTime']}</td>
