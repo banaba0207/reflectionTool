@@ -18,6 +18,13 @@
     {$nowDate        = $smarty.now|date_format:"%Y-%m-%d"}
     {$oneWeekAgoDate = ($smarty.now-24*60*60*7)|date_format:"%Y-%m-%d"}
 
+    <!-- 曜日出力用用関数 -->
+    {function name=dayOfWeekJP date=$smarty.now}
+        (
+        {$date|date_format:"%a"|replace:"Sun":"日"|replace:"Mon":"月"|replace:"Tue":"火"|replace:"Wed":"水"|replace:"Thu":"木"|replace:"Fri":"金"|replace:"Sat":"土"}
+        )
+    {/function}
+
     <!-- ヘッダーメニュー -->
     <div class="ui menu">
       <div class="header item">

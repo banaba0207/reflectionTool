@@ -42,7 +42,7 @@
         <tbody>
             {foreach from=$reportByDateList key=date item=v}
                 <tr>
-                    <td>{$date}</td>
+                    <td>{$date} {call dayOfWeekJP date=$date}</td>
                     <td>{$v.normalTaskTime}<br>{$v.normalTaskTimeRate} %</td>
                     <td>{$v.cutInTaskTime}<br>{$v.cutInTaskTimeRate} %</td>
                     <td>{$v.allTime}</td>
