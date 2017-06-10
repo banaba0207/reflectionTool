@@ -1,4 +1,4 @@
-{extends file="layout.tpl"}
+{extends file="common/layout.tpl"}
 
 {block name="contents"}
     <div class="ui info message">

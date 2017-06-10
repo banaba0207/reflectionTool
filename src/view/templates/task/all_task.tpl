@@ -1,4 +1,4 @@
-{extends file="layout.tpl"}
+{extends file="common/layout.tpl"}
 
 {block name="contents"}
     <h3>タスク一覧</h3>

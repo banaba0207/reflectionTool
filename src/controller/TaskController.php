@@ -13,7 +13,7 @@ class TaskController extends BaseController
         $res       = $taskLogic->getTaskList($userId);
 
         $this->getResponse()
-            ->withTemplate('index.tpl')
+            ->withTemplate('task/index.tpl')
             ->withValues([
                 'nowTask'      => $res['nowTask'],
                 'taskDataList' => $res['taskDataList'],
@@ -27,7 +27,7 @@ class TaskController extends BaseController
         $res = $taskLogic->getTaskListAll($userId);
 
         $this->getResponse()
-            ->withTemplate('all_task.tpl')
+            ->withTemplate('task/all_task.tpl')
             ->withValues([
                 'taskDataList' => $res['taskDataList'],
             ]);
@@ -45,7 +45,7 @@ class TaskController extends BaseController
         $res = $taskLogic->getTaskListByDate($userId, $date);
 
         $this->getResponse()
-            ->withTemplate('report.tpl')
+            ->withTemplate('task/report.tpl')
             ->withValues([
                 'taskDataList'     => $res['taskDataList'],
                 'reportByDateList' => $res['reportByDateList'],
@@ -64,7 +64,7 @@ class TaskController extends BaseController
         $res = $taskLogic->getTaskListByDate($userId, $startDate, $endDate);
 
         $this->getResponse()
-            ->withTemplate('report.tpl')
+            ->withTemplate('task/report.tpl')
             ->withValues([
                 'taskDataList'     => $res['taskDataList'],
                 'reportByDateList' => $res['reportByDateList'],
